@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo List</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="header">
+      <h1>Список задач</h1>
+    </header>
+    <main class="main">
+      <section class="section-new-task">
+        <h2>Новая задача</h2>
+        <div>
+          <input type="text" placeholder="Название задачи..." />
+          <button>+ Добавить</button>
+        </div>
+      </section>
+      <section class="section-tasks">
+        <div class="column-tasks">
+          <h3 class="label-backlog">Бэклог</h3>
+          <ul class="ul-no-markers">
+            <li class="task-backlog">Выучить JS</li>
+            <li class="task-backlog">Выучить React</li>
+            <li class="task-backlog">Сделать домашку</li>
+          </ul>
+        </div>
+        <div class="column-tasks">
+          <h3 class="label-in-progress">В процессе</h3>
+          <ul class="ul-no-markers">
+            <li class="task-in-progress">Выпить смузи</li>
+            <li class="task-in-progress">Попить воды</li>
+          </ul>
+        </div>
+        <div class="column-tasks">
+          <h3 class="label-done">Готово</h3>
+          <ul class="ul-no-markers">
+            <li class="task-done">Позвонить маме</li>
+            <li class="task-done">Погладить кота</li>
+          </ul>
+        </div>
+        <div class="column-tasks">
+          <h3 class="label-trash">Корзина</h3>
+          <ul class="ul-no-markers">
+            <li class="task-trash">Сходить погулять</li>
+            <li class="task-trash">Прочитать Войну и Мир</li>
+          </ul>
+          <button class="button-clear">× Очистить</button>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
