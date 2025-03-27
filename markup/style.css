@@ -1,0 +1,150 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #eef4fb;
+  color: #000000;
+}
+
+.header {
+  background-color: #2f80ed;
+  color: #fff;
+  margin-top: -25px;
+  padding-top: 5px;
+  padding-bottom: 10px;
+  padding-left: 60px;
+  text-align: left;
+}
+
+.main {
+  padding: 40px;
+}
+
+.section-new-task {
+  display: inline-block;
+  background-color: white;
+  padding: 20px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  margin-left: 20px;
+  min-width: 350px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.section-new-task h2 {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.section-new-task div {
+  display: inline-block;
+  min-width: 320px;
+  gap: 10px;
+  width: 100%;
+}
+
+.section-new-task input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.section-new-task button {
+  margin-left: 10px;
+  background-color: #2f80ed;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.section-tasks {
+  display: flex;
+  max-width: 2200px;
+  min-width: 1000px;
+  gap: 20px;
+}
+
+.column-tasks {
+  flex: 1;
+  padding: 20px;
+}
+
+.column-tasks h3 {
+  margin: 0 0 10px;
+  padding: 5px 20px;
+  border-radius: 4px;
+  font-size: 16px;
+  text-align: left;
+  display: inline-block;
+}
+
+.label-backlog {
+  background-color: #e3e3e3;
+  color: #6c6f71;
+}
+
+.label-in-progress {
+  background-color: #d6e7ff;
+  color: #2e85ee;
+}
+
+.label-done {
+  background-color: #d7f9e0;
+  color: #73bc7b;
+}
+
+.label-trash {
+  background-color: #fbe3e3;
+  color: #cc6968;
+}
+
+.ul-no-markers {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.ul-no-markers li {
+  background-color: white;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  border-left: 5px solid #ddd;
+}
+
+.task-backlog {
+  border-left-color: #e3e3e3 !important;
+}
+
+.task-in-progress {
+  border-left-color: #d6e7ff !important;
+}
+
+.task-done {
+  border-left-color: #d7f9e0 !important;
+}
+
+.task-trash {
+  border-left-color: #fbe3e3 !important;
+}
+
+.button-clear {
+  width: 100%;
+  background-color: #d0646c;
+  color: white;
+  border: none;
+  padding: 15px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
