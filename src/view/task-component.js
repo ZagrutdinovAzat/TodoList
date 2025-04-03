@@ -1,7 +1,7 @@
 import { createElement } from "../framework/render.js";
 
 const createTaskTemplate = (text, taskClass) => `
-  <li class="${taskClass}">${text}</li>
+  <li class="task-${taskClass}">${text}</li>
 `;
 
 export default class TaskComponent {
