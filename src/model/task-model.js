@@ -3,7 +3,7 @@ import { tasks } from "../mock/task.js";
 export default class TaskModel {
   #boardtasks = tasks;
 
-  getTasks() {
+  get tasks() {
     return this.#boardtasks;
   }
 }

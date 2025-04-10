@@ -4,13 +4,12 @@ import TaskBoardComponent from "../view/task-board-component.js";
 import { render } from "../framework/render.js";
 import { StatusLabel, TaskClass } from "../const.js";
 import ClearButtonTemplate from "../view/clear-button-component.js";
+import EmptyStateComponent from "../view/empty-state-component.js";
 
 export default class TaskBoardPresenter {
   #taskBoardComponent = new TaskBoardComponent();
-
   #boardContainer = null;
   #taskModel = null;
-
   #boardTasks = [];
 
   constructor({ boardContainer, taskModel }) {
@@ -18,29 +17,61 @@ export default class TaskBoardPresenter {
     this.#taskModel = taskModel;
   }
 
-  init() {
-    this.#boardTasks = [...this.#taskModel.getTasks()];
+  #renderTask(task, container) {
+    const taskComponent = new TaskComponent(task.title, task.status);
+    render(taskComponent, container.querySelector(".ul-no-markers"));
+  }
 
-    render(this.#taskBoardComponent, this.#boardContainer);
+  #renderClearButton(container) {
+    render(new ClearButtonTemplate(), container);
+  }
 
-    let currentStatus = "";
-    let taskListComponent = null;
+  #renderEmptyState(container) {
+    render(new EmptyStateComponent(), container);
+  }
 
-    for (let i = 0; i < this.#boardTasks.length; i++) {
-      const currentTask = this.#boardTasks[i];
-      if (currentTask.status != currentStatus) {
-        currentStatus = currentTask.status;
-        const title = StatusLabel[currentStatus];
-        const labelClass = TaskClass[currentStatus];
-        taskListComponent = new TaskListComponent(title, labelClass);
-        render(taskListComponent, this.#taskBoardComponent.getElement());
-      }
-      render(
-        new TaskComponent(currentTask.title, currentTask.status),
-        taskListComponent.getElement().querySelector(".ul-no-markers")
-      );
+  #renderTasksList(status, tasks) {
+    const title = StatusLabel[status];
+    const labelClass = TaskClass[status];
+    const taskListComponent = new TaskListComponent(title, labelClass);
+    const listContainer =
+      taskListComponent.element.querySelector(".ul-no-markers");
+
+    if (tasks.length === 0) {
+      this.#renderEmptyState(listContainer);
+    } else {
+      tasks.forEach((task) => {
+        this.#renderTask(task, taskListComponent.element);
+      });
     }
 
-    render(new ClearButtonTemplate(), taskListComponent.getElement());
+    render(taskListComponent, this.#taskBoardComponent.element);
+    return taskListComponent;
+  }
+
+  #renderBoard() {
+    render(this.#taskBoardComponent, this.#boardContainer);
+
+    const taskGroups = this.#boardTasks.reduce((acc, task) => {
+      acc[task.status] = acc[task.status] || [];
+      acc[task.status].push(task);
+      return acc;
+    }, {});
+
+    const allStatuses = Object.keys(StatusLabel);
+    const taskListComponents = allStatuses.map((status) => {
+      const tasks = taskGroups[status] || [];
+      return this.#renderTasksList(status, tasks);
+    });
+
+    if (taskListComponents.length > 0) {
+      const lastComponent = taskListComponents.at(-1);
+      this.#renderClearButton(lastComponent.element);
+    }
+  }
+
+  init() {
+    this.#boardTasks = [...this.#taskModel.tasks];
+    this.#renderBoard();
   }
 }
