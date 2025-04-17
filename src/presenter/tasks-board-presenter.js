@@ -11,10 +11,42 @@ export default class TaskBoardPresenter {
   #boardContainer = null;
   #taskModel = null;
   #boardTasks = [];
+  #clearButton = null;
 
-  constructor({ boardContainer, taskModel }) {
+  createTask() {
+    const taskTitle = document.querySelector("#add-task").value.trim();
+    if (!taskTitle) {
+      return;
+    }
+
+    this.#taskModel.addTask(taskTitle);
+
+    document.querySelector("#add-task").value = "";
+  }
+
+  constructor({ boardContainer, taskModel, clearButton }) {
     this.#boardContainer = boardContainer;
     this.#taskModel = taskModel;
+    this.#clearButton = clearButton;
+    this.#taskModel.addObserver(this.#handleModelChange.bind(this));
+  }
+
+  removeTrash() {
+    this.#taskModel.removeTrash();
+    this.#renderBoard;
+  }
+
+  #handleModelChange() {
+    this.#clearBoard();
+    this.#renderBoard();
+  }
+
+  get tasks() {
+    return this.#taskModel.tasks;
+  }
+
+  #clearBoard() {
+    this.#taskBoardComponent.element.innerHTML = "";
   }
 
   #renderTask(task, container) {
@@ -23,7 +55,7 @@ export default class TaskBoardPresenter {
   }
 
   #renderClearButton(container) {
-    render(new ClearButtonTemplate(), container);
+    render(this.#clearButton, container);
   }
 
   #renderEmptyState(container) {
@@ -50,6 +82,7 @@ export default class TaskBoardPresenter {
   }
 
   #renderBoard() {
+    this.#boardTasks = [...this.tasks];
     render(this.#taskBoardComponent, this.#boardContainer);
 
     const taskGroups = this.#boardTasks.reduce((acc, task) => {
@@ -71,7 +104,6 @@ export default class TaskBoardPresenter {
   }
 
   init() {
-    this.#boardTasks = [...this.#taskModel.tasks];
     this.#renderBoard();
   }
 }
