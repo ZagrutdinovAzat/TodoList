@@ -6,8 +6,8 @@ export const StatusLabel = {
 };
 
 export const TaskClass = {
-  ["backlog"]: "label-backlog",
-  ["in-progress"]: "label-in-progress",
-  ["done"]: "label-done",
-  ["trash"]: "label-trash",
+  ["backlog"]: "backlog",
+  ["in-progress"]: "in-progress",
+  ["done"]: "done",
+  ["trash"]: "trash",
 };

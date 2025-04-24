@@ -13,6 +13,13 @@ export default class TaskBoardPresenter {
   #boardTasks = [];
   #clearButton = null;
 
+  constructor({ boardContainer, taskModel, clearButton }) {
+    this.#boardContainer = boardContainer;
+    this.#taskModel = taskModel;
+    this.#clearButton = clearButton;
+    this.#taskModel.addObserver(this.#handleModelChange.bind(this));
+  }
+
   createTask() {
     const taskTitle = document.querySelector("#add-task").value.trim();
     if (!taskTitle) {
@@ -22,13 +29,6 @@ export default class TaskBoardPresenter {
     this.#taskModel.addTask(taskTitle);
 
     document.querySelector("#add-task").value = "";
-  }
-
-  constructor({ boardContainer, taskModel, clearButton }) {
-    this.#boardContainer = boardContainer;
-    this.#taskModel = taskModel;
-    this.#clearButton = clearButton;
-    this.#taskModel.addObserver(this.#handleModelChange.bind(this));
   }
 
   removeTrash() {
@@ -50,7 +50,7 @@ export default class TaskBoardPresenter {
   }
 
   #renderTask(task, container) {
-    const taskComponent = new TaskComponent(task.title, task.status);
+    const taskComponent = new TaskComponent(task);
     render(taskComponent, container.querySelector(".ul-no-markers"));
   }
 
@@ -62,10 +62,18 @@ export default class TaskBoardPresenter {
     render(new EmptyStateComponent(), container);
   }
 
+  #handleTaskDrop(taskId, newStatus, newIndex) {
+    this.#taskModel.updateTaskStatus(taskId, newStatus, newIndex - 1);
+  }
+
   #renderTasksList(status, tasks) {
     const title = StatusLabel[status];
     const labelClass = TaskClass[status];
-    const taskListComponent = new TaskListComponent(title, labelClass);
+    const taskListComponent = new TaskListComponent(
+      title,
+      labelClass,
+      this.#handleTaskDrop.bind(this)
+    );
     const listContainer =
       taskListComponent.element.querySelector(".ul-no-markers");
 
