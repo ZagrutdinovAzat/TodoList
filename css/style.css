@@ -161,3 +161,9 @@ body {
   justify-content: center;
   color: #e3e3e3;
 }
+
+.board_no-tasks {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+}
