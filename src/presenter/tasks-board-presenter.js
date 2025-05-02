@@ -133,6 +133,8 @@ export default class TaskBoardPresenter {
 
   #renderBoard() {
     if (this.#isLoading) return;
+
+    let f = false;
     this.#boardTasks = [...this.tasks];
     render(this.#taskBoardComponent, this.#boardContainer);
 
@@ -145,10 +147,13 @@ export default class TaskBoardPresenter {
     const allStatuses = Object.keys(StatusLabel);
     const taskListComponents = allStatuses.map((status) => {
       const tasks = taskGroups[status] || [];
+      if (status === "trash" && tasks.length > 0) {
+        f = true;
+      }
       return this.#renderTasksList(status, tasks);
     });
 
-    if (taskListComponents.length > 0) {
+    if (f) {
       const lastComponent = taskListComponents.at(-1);
       this.#renderClearButton(lastComponent.element);
     }

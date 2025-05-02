@@ -1,5 +1,5 @@
 import ApiService from "./framework/view/api-service.js";
-
+// кнопка не активная
 const Method = {
   GET: "GET",
   PUT: "PUT",
